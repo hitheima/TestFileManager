@@ -1,8 +1,9 @@
+from base.base_driver import init_driver
+from page.file_page import FilePage
+
 import os, sys, time, pytest
 sys.path.append(os.getcwd())
 
-from base.base_driver import init_driver
-from page.file_page import FilePage
 
 class TestFile:
 
@@ -10,6 +11,7 @@ class TestFile:
         self.driver = init_driver()
         self.file_page = FilePage(self.driver)
 
+    @pytest.mark.skipif(2 > 1, "完成")
     def test_first(self):
 
         # 新建文件夹zzz
@@ -49,5 +51,5 @@ class TestFile:
         else:
             assert 1
             return
-    
+
         assert 0
