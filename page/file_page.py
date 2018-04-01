@@ -1,4 +1,7 @@
 import os, sys
+
+from selenium.common.exceptions import TimeoutException
+
 sys.path.append(os.getcwd())
 
 from selenium.webdriver.common.by import By
@@ -36,6 +39,18 @@ class FilePage(BaseAction):
 
     # set_as_home
     set_as_home_button = By.XPATH, "text,Set,1"
+
+    # first_edit_text
+    first_deit_text = By.CLASS_NAME, "android.widget.EditText"
+
+    # 名称已经存在
+    name_already_exist = By.XPATH, "text,已经存在,1"
+
+    # xpath 确实
+    ok_button = By.XPATH, "text,确定"
+
+    # xpath 取消
+    cancel_button = By.XPATH, "text,取消"
 
     # 点击操作
     def click_operation(self):
@@ -76,3 +91,23 @@ class FilePage(BaseAction):
     # set_as_home
     def click_set_as_home(self):
         self.click(self.set_as_home_button)
+
+    # 清空文本框内容，并输入文字
+    def input_first_edit_text(self, text):
+        self.clear_text(self.first_deit_text)
+        self.input_text(self.first_deit_text, text)
+
+    # 根据文件名新建文件
+    def create_dir_with_name(self, dir_name):
+        self.click_operation()
+        self.click_new_dir()
+        self.input_first_edit_text(dir_name)
+
+        try:
+            self.find_element(self.name_already_exist)
+        except TimeoutException:
+            self.click(self.ok_button)
+            return
+
+        self.click(self.cancel_button)
+        self.click(self.cancel_button)
