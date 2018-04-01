@@ -1,4 +1,6 @@
 import os, sys, time, pytest
+import random
+
 sys.path.append(os.getcwd())
 
 from base.base_driver import init_driver
@@ -10,6 +12,24 @@ class TestFile:
     def setup(self):
         self.driver = init_driver()
         self.file_page = FilePage(self.driver)
+
+    @pytest.mark.skipif(True, reason="done")
+    def test_new_dir(self):
+        self.file_page.entry_sdcard()
+        current_dir_file_count = self.file_page.get_current_dir_file_count()
+
+        dir_name = ""
+        while True:
+            dir_name = dir_name + str(random.randint(0, 9))
+            if not self.file_page.create_dir_with_name(dir_name):
+                continue
+            else:
+                break
+
+        after_current_dir_file_count = self.file_page.get_current_dir_file_count()
+        self.file_page.click_operation()
+        self.file_page.click_all_deselect()
+        assert after_current_dir_file_count - current_dir_file_count == 1, "之后比之前多了不是一个文件夹"
 
     @pytest.mark.skipif(True, reason="done")
     def test_refresh(self):

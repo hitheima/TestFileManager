@@ -68,6 +68,10 @@ class FilePage(BaseAction):
     # 当前目录文件名特征
     current_dir_file_names = By.ID, "com.cyanogenmod.filemanager:id/navigation_view_item_name"
 
+    # 选择后特征
+    after_select_info = By.ID, "com.cyanogenmod.filemanager:id/navigation_status_selection_label"
+
+
     # 点击操作
     def click_operation(self):
         self.click(self.operation_button)
@@ -184,3 +188,11 @@ class FilePage(BaseAction):
         start_y = end_y * 3
         center_x = window_width * 0.5
         self.driver.swipe(center_x, start_y, center_x, end_y)
+
+    def get_current_dir_file_count(self):
+        time.sleep(1)
+        self.click_operation()
+        self.click_all_select()
+        temp = self.find_element(self.after_select_info).get_attribute("text")
+        info_list = temp.split(" ")
+        return int(info_list[1])
