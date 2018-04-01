@@ -1,8 +1,8 @@
-from base.base_driver import init_driver
-from page.file_page import FilePage
-
 import os, sys, time, pytest
 sys.path.append(os.getcwd())
+
+from base.base_driver import init_driver
+from page.file_page import FilePage
 
 
 class TestFile:
@@ -11,7 +11,14 @@ class TestFile:
         self.driver = init_driver()
         self.file_page = FilePage(self.driver)
 
-    @pytest.mark.skipif(2 > 1, "完成")
+    @pytest.mark.skipif(True, reason="done")
+    def test_property(self):
+        # 获取当前目录名字
+        current_dir_name = self.file_page.get_current_dir_name()
+        current_property_dir_name = self.file_page.get_current_property_dir_name()
+        assert current_dir_name == current_property_dir_name
+
+    @pytest.mark.skipif(True, reason="done")
     def test_first(self):
 
         # 新建文件夹zzz

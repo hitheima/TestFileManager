@@ -61,13 +61,19 @@ class FilePage(BaseAction):
     # 移动选择项
     move_all_select_button = By.XPATH, "text,移动选择项"
 
+    # 当前目录名字的item
+    current_dir_items = By.ID, "com.cyanogenmod.filemanager:id/breadcrumb_item"
+
+    # 当前目录名字的item
+    current_property_dir_name = By.ID, "com.cyanogenmod.filemanager:id/fso_properties_name"
+
     # 点击操作
     def click_operation(self):
         self.click(self.operation_button)
 
     # 点击属性
     def click_property(self):
-        self.click(self.operation_button)
+        self.click(self.property_button)
 
     # 刷新
     def click_refresh(self):
@@ -152,4 +158,17 @@ class FilePage(BaseAction):
 
     def is_file_exits_with_name(self, file_name):
         return self.create_file_with_name(file_name)
+
+    def get_current_dir_name(self):
+        items = self.find_elements(self.current_dir_items)
+        last_index = len(items) - 1
+        return items[last_index].get_attribute("text")
+
+    def get_current_property_dir_name(self):
+        # 点击菜单
+        self.click_operation()
+        # 点击属性
+        self.click_property()
+        return self.find_element(self.current_property_dir_name).get_attribute("text")
+
 
