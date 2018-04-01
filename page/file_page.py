@@ -58,6 +58,9 @@ class FilePage(BaseAction):
     # 内部存储设备
     sdcard_button = By.XPATH, "text,内部存储设备"
 
+    # 移动选择项
+    move_all_select_button = By.XPATH, "text,移动选择项"
+
     # 点击操作
     def click_operation(self):
         self.click(self.operation_button)
@@ -112,11 +115,12 @@ class FilePage(BaseAction):
             self.find_element(self.name_already_exist)
         except TimeoutException:
             self.click(self.ok_button)
-            return
+            return True
         self.click(self.cancel_button)
         self.click(self.cancel_button)
+        return False
 
-    def creat_file_with_name(self, file_name):
+    def create_file_with_name(self, file_name):
         self.click_operation()
         self.click_new_file()
         self.input_first_edit_text(file_name)
@@ -124,9 +128,10 @@ class FilePage(BaseAction):
             self.find_element(self.name_already_exist)
         except TimeoutException:
             self.click(self.ok_button)
-            return
+            return True
         self.click(self.cancel_button)
         self.click(self.cancel_button)
+        return False
 
     def entry_dir_with_name(self, dir_name):
         loc = By.XPATH, "text," + dir_name
@@ -137,7 +142,14 @@ class FilePage(BaseAction):
         self.click_operation()
         self.click_all_select()
 
-    def goto_sdcard(self):
+    def entry_sdcard(self):
         self.click(self.side_menu_button)
         self.click(self.sdcard_button)
+
+    def move_all_select(self):
+        self.click_operation()
+        self.click(self.move_all_select_button)
+
+    def is_file_exits_with_name(self, file_name):
+        return self.create_file_with_name(file_name)
 
