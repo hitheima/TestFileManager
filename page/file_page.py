@@ -44,7 +44,7 @@ class FilePage(BaseAction):
     first_deit_text = By.CLASS_NAME, "android.widget.EditText"
 
     # 名称已经存在
-    name_already_exist = By.XPATH, "text,已经存在,1"
+    name_already_exist = By.XPATH, "text,已存在,1"
 
     # xpath 确实
     ok_button = By.XPATH, "text,确定"
@@ -102,12 +102,27 @@ class FilePage(BaseAction):
         self.click_operation()
         self.click_new_dir()
         self.input_first_edit_text(dir_name)
-
         try:
             self.find_element(self.name_already_exist)
         except TimeoutException:
             self.click(self.ok_button)
             return
+        self.click(self.cancel_button)
+        self.click(self.cancel_button)
 
+    def creat_file_with_name(self, file_name):
+        self.click_operation()
+        self.click_new_file()
+        self.input_first_edit_text(file_name)
+        try:
+            self.find_element(self.name_already_exist)
+        except TimeoutException:
+            self.click(self.ok_button)
+            return
         self.click(self.cancel_button)
         self.click(self.cancel_button)
+
+    def entry_dir_with_name(self, dir_name):
+        loc = By.XPATH, "text," + dir_name
+        self.scroll_page_until_loc(loc)
+        self.click(loc)

@@ -37,8 +37,8 @@ class BaseAction:
         window_size = self.driver.get_window_size()
         window_height = window_size["height"]
         window_width = window_size["width"]
-        start_y = window_height * 0.25
-        end_y = start_y * 3
+        end_y = window_height * 0.25
+        start_y = end_y * 3
         center_x = window_width * 0.5
 
         while True:
