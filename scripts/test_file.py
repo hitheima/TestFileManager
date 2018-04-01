@@ -25,14 +25,18 @@ class TestFile:
         # 进入zzz
         self.file_page.entry_dir_with_name("zzz")
 
-        # 创建1-20.txt文件
-        for i in range(20):
-            self.file_page.creat_file_with_name(str(i + 1) + ".txt")
-            time.sleep(1)
+        # # 创建1-20.txt文件
+        # for i in range(20):
+        #     self.file_page.creat_file_with_name(str(i + 1) + ".txt")
+        #     time.sleep(1)
 
         # 选中当前目录的所有文件
+        self.file_page.select_all_file()
 
-        # 回到首页
+        # 进入sdcard
+        self.file_page.goto_sdcard()
+
+        # 进入aaa
 
         # 移动到aaa目录中
 

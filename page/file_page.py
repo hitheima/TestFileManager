@@ -52,6 +52,12 @@ class FilePage(BaseAction):
     # xpath 取消
     cancel_button = By.XPATH, "text,取消"
 
+    # 侧边栏按钮
+    side_menu_button = By.ID, "android:id/home"
+
+    # 内部存储设备
+    sdcard_button = By.XPATH, "text,内部存储设备"
+
     # 点击操作
     def click_operation(self):
         self.click(self.operation_button)
@@ -126,3 +132,12 @@ class FilePage(BaseAction):
         loc = By.XPATH, "text," + dir_name
         self.scroll_page_until_loc(loc)
         self.click(loc)
+
+    def select_all_file(self):
+        self.click_operation()
+        self.click_all_select()
+
+    def goto_sdcard(self):
+        self.click(self.side_menu_button)
+        self.click(self.sdcard_button)
+
