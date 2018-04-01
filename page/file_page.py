@@ -1,9 +1,7 @@
-import os, sys
-
-from selenium.common.exceptions import TimeoutException
-
+import os, sys, time
 sys.path.append(os.getcwd())
 
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from base.base_action import BaseAction
 
@@ -66,6 +64,9 @@ class FilePage(BaseAction):
 
     # 当前目录名字的item
     current_property_dir_name = By.ID, "com.cyanogenmod.filemanager:id/fso_properties_name"
+
+    # 当前目录文件名特征
+    current_dir_file_names = By.ID, "com.cyanogenmod.filemanager:id/navigation_view_item_name"
 
     # 点击操作
     def click_operation(self):
@@ -150,6 +151,7 @@ class FilePage(BaseAction):
 
     def entry_sdcard(self):
         self.click(self.side_menu_button)
+        time.sleep(1)
         self.click(self.sdcard_button)
 
     def move_all_select(self):
@@ -171,4 +173,14 @@ class FilePage(BaseAction):
         self.click_property()
         return self.find_element(self.current_property_dir_name).get_attribute("text")
 
+    def get_current_dir_first_file_name(self):
+        return self.find_element(self.current_dir_file_names).get_attribute("text")
 
+    def scroll_page_onetime(self):
+        window_size = self.driver.get_window_size()
+        window_height = window_size["height"]
+        window_width = window_size["width"]
+        end_y = window_height * 0.25
+        start_y = end_y * 3
+        center_x = window_width * 0.5
+        self.driver.swipe(center_x, start_y, center_x, end_y)
