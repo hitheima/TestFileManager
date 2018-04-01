@@ -32,6 +32,7 @@ class BaseAction:
             loc_value = self.make_xpath_with_feature(loc_value)
         return WebDriverWait(self.driver, time, poll).until(lambda x: x.find_elements(loc_by, loc_value))
 
+    # 滑动当前页面到某个元素出现
     def scroll_page_until_loc(self, loc, direction="down"):
         window_size = self.driver.get_window_size()
         window_height = window_size["height"]
@@ -78,6 +79,4 @@ class BaseAction:
             elif args[2] == "0":
                 xpath = xpath + "@" + args[0] + "='" + args[1] + "'and"
         return xpath
-
-        # 滑动到制定的页面
 
